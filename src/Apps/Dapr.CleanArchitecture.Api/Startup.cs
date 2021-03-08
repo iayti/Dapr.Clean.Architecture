@@ -26,12 +26,10 @@ namespace Dapr.CleanArchitecture.Api
 
         public IConfiguration Configuration { get; }
 
-        //public IWebHostEnvironment Environment { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
-            services.AddInfrastructure(Configuration);//, Environment);
+            services.AddInfrastructure(Configuration);
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
@@ -98,7 +96,6 @@ namespace Dapr.CleanArchitecture.Api
 
             app.UseRouting();
             app.UseAuthentication();
-            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

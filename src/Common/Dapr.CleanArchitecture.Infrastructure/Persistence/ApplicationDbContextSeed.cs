@@ -1,31 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Dapr.CleanArchitecture.Infrastructure.Identity;
 using Dapr.CleanArchitecture.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace Dapr.CleanArchitecture.Infrastructure.Persistence
 {
     public static class ApplicationDbContextSeed
     {
-        public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            var administratorRole = new IdentityRole("Administrator");
-
-            if (roleManager.Roles.All(r => r.Name != administratorRole.Name))
-            {
-                await roleManager.CreateAsync(administratorRole);
-            }
-
-            var defaultUser = new ApplicationUser { UserName = "iayti", Email = "test@test.com" };
-
-            if (userManager.Users.All(u => u.UserName != defaultUser.UserName))
-            {
-                await userManager.CreateAsync(defaultUser, "Matech_1850");
-                await userManager.AddToRolesAsync(defaultUser, new[] { administratorRole.Name });
-            }
-        }
-
         public static async Task SeedSampleCityDataAsync(ApplicationDbContext context)
         {
             // Seed, if necessary

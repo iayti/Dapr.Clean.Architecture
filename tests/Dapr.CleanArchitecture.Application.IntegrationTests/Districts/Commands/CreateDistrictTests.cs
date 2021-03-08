@@ -30,8 +30,6 @@ namespace Dapr.CleanArchitecture.Application.IntegrationTests.Districts.Commands
                 Name = "Bursa"
             });
 
-            var userId = await RunAsDefaultUserAsync();
-
             var command = new CreateDistrictCommand
             {
                 Name = "Karacabey",
@@ -44,7 +42,6 @@ namespace Dapr.CleanArchitecture.Application.IntegrationTests.Districts.Commands
 
             list.Should().NotBeNull();
             list.Name.Should().Be(command.Name);
-            list.Creator.Should().Be(userId);
             list.CreateDate.Should().BeCloseTo(DateTime.Now, 10000);
         }
     }

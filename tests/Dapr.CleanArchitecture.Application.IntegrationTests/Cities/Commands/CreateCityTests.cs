@@ -41,8 +41,6 @@ namespace Dapr.CleanArchitecture.Application.IntegrationTests.Cities.Commands
         [Test]
         public async Task ShouldCreateCity()
         {
-            var userId = await RunAsDefaultUserAsync();
-
             var command = new CreateCityCommand
             {
                 Name = "Kastamonu"
@@ -54,7 +52,6 @@ namespace Dapr.CleanArchitecture.Application.IntegrationTests.Cities.Commands
 
             list.Should().NotBeNull();
             list.Name.Should().Be(command.Name);
-            list.Creator.Should().Be(userId);
             list.CreateDate.Should().BeCloseTo(DateTime.Now, 10000);
         }
     }

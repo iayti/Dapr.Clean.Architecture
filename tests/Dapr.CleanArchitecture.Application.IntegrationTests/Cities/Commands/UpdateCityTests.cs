@@ -53,8 +53,6 @@ namespace Dapr.CleanArchitecture.Application.IntegrationTests.Cities.Commands
         [Test]
         public async Task ShouldUpdateCity()
         {
-            var userId = await RunAsDefaultUserAsync();
-
             var result = await SendAsync(new CreateCityCommand
             {
                 Name = "Kayyysseri"
@@ -72,7 +70,6 @@ namespace Dapr.CleanArchitecture.Application.IntegrationTests.Cities.Commands
 
             city.Name.Should().Be(command.Name);
             city.Modifier.Should().NotBeNull();
-            city.Modifier.Should().Be(userId);
             city.ModifyDate.Should().NotBeNull();
             city.ModifyDate.Should().BeCloseTo(DateTime.Now, 1000);
         }

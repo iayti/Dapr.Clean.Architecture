@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Dapr.CleanArchitecture.Infrastructure.Identity;
 using Dapr.CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,11 +29,7 @@ namespace Dapr.CleanArchitecture.Api
                     {
                         await context.Database.MigrateAsync();
                     }
-
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-                    await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
+                    
                     await ApplicationDbContextSeed.SeedSampleCityDataAsync(context);
                 }
                 catch (Exception ex)

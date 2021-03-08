@@ -1,13 +1,10 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapr.CleanArchitecture.Application.Common.Interfaces;
-using Dapr.CleanArchitecture.Infrastructure.Identity;
 using Dapr.CleanArchitecture.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -85,50 +82,6 @@ namespace Dapr.CleanArchitecture.Application.IntegrationTests
             var mediator = scope.ServiceProvider.GetService<ISender>();
 
             return await mediator.Send(request);
-        }
-
-        public static async Task<string> RunAsDefaultUserAsync()
-        {
-            return await RunAsUserAsync("test@local", "Testing1234!", new string[] { });
-        }
-
-        public static async Task<string> RunAsAdministratorAsync()
-        {
-            return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { "Administrator" });
-        }
-
-        public static async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
-        {
-            using var scope = _scopeFactory.CreateScope();
-
-            var userManager = scope.ServiceProvider.GetService<UserManager<Infrastructure.Identity.ApplicationUser>>();
-
-            var user = new Infrastructure.Identity.ApplicationUser { UserName = userName, Email = userName };
-
-            var result = await userManager.CreateAsync(user, password);
-
-            if (roles.Any())
-            {
-                var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
-
-                foreach (var role in roles)
-                {
-                    await roleManager.CreateAsync(new IdentityRole(role));
-                }
-
-                await userManager.AddToRolesAsync(user, roles);
-            }
-
-            if (result.Succeeded)
-            {
-                _currentUserId = user.Id;
-
-                return _currentUserId;
-            }
-
-            var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
-
-            throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
         }
 
         public static async Task ResetState()

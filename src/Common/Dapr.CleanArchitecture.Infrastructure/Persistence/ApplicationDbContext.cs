@@ -3,18 +3,14 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapr.CleanArchitecture.Application.Common.Interfaces;
-using Dapr.CleanArchitecture.Infrastructure.Identity;
 using Dapr.CleanArchitecture.Domain.Common;
 using Dapr.CleanArchitecture.Domain.Entities;
-using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Extensions.Options;
 
 namespace Dapr.CleanArchitecture.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         private readonly IDateTime _dateTime;
         private readonly ICurrentUserService _currentUserService;
@@ -22,10 +18,9 @@ namespace Dapr.CleanArchitecture.Infrastructure.Persistence
 
         public ApplicationDbContext(
             DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions,
             ICurrentUserService currentUserService,
             IDateTime dateTime, 
-            IDomainEventService domainEventService) : base(options, operationalStoreOptions)
+            IDomainEventService domainEventService) : base(options)
         {
             _dateTime = dateTime;
             _domainEventService = domainEventService;

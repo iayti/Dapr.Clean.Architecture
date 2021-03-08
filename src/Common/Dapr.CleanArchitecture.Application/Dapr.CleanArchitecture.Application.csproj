@@ -12,15 +12,11 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.1" />
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.8.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationUser\Commands\Create\" />
-    <Folder Include="ApplicationUser\Commands\Delete\" />
-    <Folder Include="ApplicationUser\Commands\Update\" />
     <Folder Include="Villages\Commands\" />
   </ItemGroup>
 

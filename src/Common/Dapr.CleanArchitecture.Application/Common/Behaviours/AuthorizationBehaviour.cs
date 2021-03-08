@@ -15,54 +15,25 @@ namespace Dapr.CleanArchitecture.Application.Common.Behaviours
     {
         private readonly ILogger<TRequest> _logger;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IIdentityService _identityService;
 
         public AuthorizationBehaviour(
             ILogger<TRequest> logger,
-            ICurrentUserService currentUserService,
-            IIdentityService identityService)
+            ICurrentUserService currentUserService)
         {
             _logger = logger;
             _currentUserService = currentUserService;
-            _identityService = identityService;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
 
-            if (authorizeAttributes.Any())
-            {
-                // Must be authenticated user
-                if (_currentUserService.UserId == null)
-                {
-                    throw new UnauthorizedAccessException();
-                }
-
-                var authorizeAttributesWithRoles = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Roles));
-
-                if (authorizeAttributesWithRoles.Any())
-                {
-                    foreach (var roles in authorizeAttributesWithRoles.Select(a => a.Roles.Split(',')))
-                    {
-                        var authorized = false;
-                        foreach (var role in roles)
-                        {
-                            var isInRole = await _identityService.UserIsInRole(_currentUserService.UserId, role.Trim());
-                            if (!isInRole)
-                                continue;
-                            authorized = true;
-                        }
-
-                        // Must be a member of at least one role in roles
-                        if (!authorized)
-                        {
-                            _logger.LogInformation("Matech.Dapr.CleanArchitecture Authorization Request: {@UserId} {@Request}", _currentUserService.UserId, request);
-                            throw new ForbiddenAccessException();
-                        }
-                    }
-                }
-            }
+            if (!authorizeAttributes.Any()) 
+                return await next();
+            
+            // Must be authenticated user
+            if (_currentUserService.UserId == null)
+                throw new UnauthorizedAccessException();
 
             // User is authorized / authorization not required
             return await next();
