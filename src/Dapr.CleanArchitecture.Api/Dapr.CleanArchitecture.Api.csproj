@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Dapr.CleanArchitecture.Application\Dapr.CleanArchitecture.Application.csproj" />
-    <ProjectReference Include="..\..\Common\Dapr.CleanArchitecture.Infrastructure\Dapr.CleanArchitecture.Infrastructure.csproj" />
+    <ProjectReference Include="..\Dapr.CleanArchitecture.Application\Dapr.CleanArchitecture.Application.csproj" />
+    <ProjectReference Include="..\Dapr.CleanArchitecture.Infrastructure\Dapr.CleanArchitecture.Infrastructure.csproj" />
   </ItemGroup>
 
   <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">

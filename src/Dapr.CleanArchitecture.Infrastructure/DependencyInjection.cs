@@ -32,7 +32,7 @@ namespace Dapr.CleanArchitecture.Infrastructure
 
             services.AddScoped<IDomainEventService, DomainEventService>();
 
-            services.AddTransient<IHttpClientHandler, HttpClientHandler>();
+            services.AddHttpClient<IHttpClientHandler, HttpClientHandler>();
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<ITokenService, TokenService>();
 

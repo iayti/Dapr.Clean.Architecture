@@ -36,13 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Apps\Dapr.CleanArchitecture.Api\Dapr.CleanArchitecture.Api.csproj" />
-    <ProjectReference Include="..\..\src\Common\Dapr.CleanArchitecture.Application\Dapr.CleanArchitecture.Application.csproj" />
-    <ProjectReference Include="..\..\src\Common\Dapr.CleanArchitecture.Infrastructure\Dapr.CleanArchitecture.Infrastructure.csproj" />
+    <Folder Include="WeatherForecast" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="WeatherForecast" />
+    <ProjectReference Include="..\..\src\Dapr.CleanArchitecture.Api\Dapr.CleanArchitecture.Api.csproj" />
+    <ProjectReference Include="..\..\src\Dapr.CleanArchitecture.Application\Dapr.CleanArchitecture.Application.csproj" />
   </ItemGroup>
 
 </Project>

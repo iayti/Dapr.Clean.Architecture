@@ -16,8 +16,4 @@
   <ItemGroup>
     <Folder Include="ValueObjects" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Common\Dapr.CleanArchitecture.Domain\Dapr.CleanArchitecture.Domain.csproj" />
-  </ItemGroup>
 </Project>
